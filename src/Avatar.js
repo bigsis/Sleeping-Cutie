@@ -22,7 +22,6 @@ var Avatar = cc.Node.extend({
 			animation.addSpriteFrameWithFile( 'images/kirby/sleep_kirby09.png' );
 			animation.addSpriteFrameWithFile( 'images/kirby/sleep_kirby10.png' );
 			animation.addSpriteFrameWithFile( 'images/kirby/sleep_kirby11.png' );
-			console.log('ssss');
 			animation.setDelayPerUnit( 0.4 );
 			return cc.RepeatForever.create( cc.Animate.create( animation ) );
 	}

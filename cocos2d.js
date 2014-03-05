@@ -13,7 +13,8 @@
         //SingleEngineFile:'',
         appFiles:[
             'src/GameLayer.js',     //add your own files in order here
-            'src/Avatar.js'
+            'src/Avatar.js',
+            'src/clock.js'
         ]
     };
 
