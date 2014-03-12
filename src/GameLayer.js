@@ -1,6 +1,8 @@
 var GameLayer = cc.LayerColor.extend({
     init: function() {
         this.countClock = 0;
+        this.wakeGauge = 0;
+        this.wakeRate = 0;
         this._super( new cc.Color4B( 127, 127, 127, 255 ) );
         this.setPosition( new cc.Point( 0, 0 ) );
         this.avatar = new Avatar();
@@ -11,25 +13,33 @@ var GameLayer = cc.LayerColor.extend({
         for( var i = 0; i < 30; i++ ){
             this.clock[i] = new Clock();
         }
-        this.hey(Math.random()*5);
+        this.randomClock(Math.random()*5);
         
         return true;
     },
 
-    hey: function(t) {
+    randomClock: function(t) {
         this.scheduleOnce( function( ){ 
             this.addClock();
-            this.hey( Math.random() * 3 );
+            this.randomClock( Math.random() * 3 );
         } , t);
     },
 
     addClock: function() {
         this.clock[this.countClock].setPosition(cc.p( Math.random() * screenWidth, Math.random() * screenHeight ));
         this.addChild(this.clock[this.countClock++]);
-        if( this.countClock == 30 ){
+        if( this.countClock >= 30 ){
             this.countClock = 0;
         }
-        console.log(this.countClock++);
+    },
+
+    clockAlarmed: function() {
+        this.wakeRate++;
+        console.log(this.wakeRate);
+    },
+
+    clockStop: function() {
+        this.wakeRate--;
     }
 });
 

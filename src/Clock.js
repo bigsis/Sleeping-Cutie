@@ -2,10 +2,21 @@ var Clock =  cc.Sprite.extend({
 	ctor: function() {
 		this._super();
 		this.initWithFile( "images/clock/idle_clock01.png");
+		this.state = Clock.IDLE;
 
+		this.scheduleOnce( function( ){ 
+		    this.getParent().clockAlarmed();
+			this.state = Clock.ALARM;
+		} , Math.random() * 3 );
 		this.movingAction = this.createAnimation();
 		this.runAction( this.movingAction );
 	},
+
+	onMouseDown:function( event ) {
+    	var rawLoc = event.getLocation();
+    	var loc = this.getOnPanelPos(rawLoc);
+    },
+
 
 	createAnimation: function() {
 		var animation = new cc.Animation.create();
@@ -25,3 +36,6 @@ var Clock =  cc.Sprite.extend({
 		return cc.RepeatForever.create( cc.Animate.create( animation ) );
 	}
 });
+
+Clock.IDLE = 0;
+Clock.ALARM = 1;
