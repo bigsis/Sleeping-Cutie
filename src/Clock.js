@@ -1,7 +1,7 @@
 var Clock =  cc.Sprite.extend({
 	ctor: function() {
 		this._super();
-		this.initWithFile( "images/clock/idle_clock01");
+		this.initWithFile( "images/clock/idle_clock01.png");
 
 		this.movingAction = this.createAnimation();
 		this.runAction( this.movingAction );
