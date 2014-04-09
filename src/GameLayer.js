@@ -9,10 +9,14 @@ var GameLayer = cc.LayerColor.extend({
         this.avatar.setPosition( cc.p( screenWidth / 2, screenHeight / 2 ) );
         this.addChild( this.avatar );
 
-        this.clock = [];
-        for( var i = 0; i < 30; i++ ){
-            this.clock[i] = new Clock();
-        }
+        this.guage = new Guage();
+        this.guage.setPosition( cc.p( 50 , screenHeight - 100 ) );
+        this.addChild( this.guage );
+
+        this.clock;
+        // for( var i = 0; i < 30; i++ ){
+        //     this.clock[i] = new Clock();
+        // }
         this.randomClock(Math.random()*5);
 
          this.setMouseEnabled( true );
@@ -23,15 +27,24 @@ var GameLayer = cc.LayerColor.extend({
         var location = event.getLocation();
         var childOnScreen = this.getChildren();
         var num = this.getChildrenCount();
-        console.log( location.x );
-        console.log( childOnScreen[1].getPositionX() );
+        // console.log( location.x );
+        // console.log( childOnScreen[1].getPositionX() );
         
-        for( var i = 1; i < childOnScreen.length; i++ ){
+        for( var i = childOnScreen.length-1; i > 1; i-- ){
             var posX = childOnScreen[i].getPositionX();
             var posY = childOnScreen[i].getPositionY()
-            if ( ( location.x > posX - 30 ) && ( location.x < posX + 30 ) ){
-                if ( ( location.y > posY - 30 ) && ( location.y < posY + 30 ) ){
+            if ( ( location.x > posX - 27 ) && ( location.x < posX + 27 ) ){
+                if ( ( location.y > posY - 27 ) && ( location.y < posY + 27 ) ){
+                    childOnScreen[i].dealarm();
                     this.removeChild( childOnScreen[i] );
+                    // console.log(this.getChildrenCount());
+                    if ( this.getChildrenCount() == 2 ){
+                        this.schedule( function( ){ 
+                            this.guage.decreaseRate( 0.002 );
+                        } , 0.1 );
+                        // this.guage.emptyAlarm(  );
+                    }
+                    return;
                 }
             }
         }
@@ -45,11 +58,12 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     addClock: function() {
-        this.clock[this.countClock].setPosition(cc.p( Math.random() * screenWidth, Math.random() * screenHeight ));
-        this.addChild(this.clock[this.countClock++]);
-        if( this.countClock >= 30 ){
-            this.countClock = 0;
-        }
+        this.clock = new Clock( this.guage );
+        this.clock.setPosition(cc.p( Math.random() * screenWidth, Math.random() * screenHeight ));
+        this.addChild( this.clock );
+        // if( this.countClock >= 30 ){
+        //     this.countClock = 0;
+        // }
     },
 
     clockAlarmed: function() {

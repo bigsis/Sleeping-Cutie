@@ -15,7 +15,8 @@
             'src/resources.js',
             'src/GameLayer.js',     //add your own files in order here
             'src/Avatar.js',
-            'src/clock.js'
+            'src/clock.js',
+            'src/Guage.js'
         ]
     };
 

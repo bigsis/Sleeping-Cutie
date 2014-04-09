@@ -27,6 +27,7 @@ var g_resources = [
     {src: 'images/kirby/sleep_kirby13.png' },
     {src: 'images/kirby/sleep_kirby14.png' },
     {src: 'images/nest.png' },
+    {src: 'images/wake_guage.png' },
 
  
     //plist
