@@ -8,15 +8,10 @@ var Clock =  cc.Sprite.extend({
 		    this.getParent().clockAlarmed();
 			this.state = Clock.ALARM;
 		} , Math.random() * 3 );
+		
 		this.movingAction = this.createAnimation();
 		this.runAction( this.movingAction );
 	},
-
-	onMouseDown:function( event ) {
-    	var rawLoc = event.getLocation();
-    	var loc = this.getOnPanelPos(rawLoc);
-    },
-
 
 	createAnimation: function() {
 		var animation = new cc.Animation.create();

@@ -14,11 +14,30 @@ var GameLayer = cc.LayerColor.extend({
             this.clock[i] = new Clock();
         }
         this.randomClock(Math.random()*5);
-        
+
+         this.setMouseEnabled( true );
         return true;
     },
 
-    randomClock: function(t) {
+    onMouseDown: function( event ) {
+        var location = event.getLocation();
+        var childOnScreen = this.getChildren();
+        var num = this.getChildrenCount();
+        console.log( location.x );
+        console.log( childOnScreen[1].getPositionX() );
+        
+        for( var i = 1; i < childOnScreen.length; i++ ){
+            var posX = childOnScreen[i].getPositionX();
+            var posY = childOnScreen[i].getPositionY()
+            if ( ( location.x > posX - 30 ) && ( location.x < posX + 30 ) ){
+                if ( ( location.y > posY - 30 ) && ( location.y < posY + 30 ) ){
+                    this.removeChild( childOnScreen[i] );
+                }
+            }
+        }
+    },
+
+    randomClock: function( t ) {
         this.scheduleOnce( function( ){ 
             this.addClock();
             this.randomClock( Math.random() * 3 );
