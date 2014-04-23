@@ -18,7 +18,9 @@ var Clock =  cc.Sprite.extend({
 	},
 
 	dealarm: function() {
-		this.guage.decreaseRate( 0.001 );
+		if( this.state == Clock.ALARM ){
+			this.guage.decreaseRate( 0.001 );
+		}
 	},
 
 	createAnimation: function() {

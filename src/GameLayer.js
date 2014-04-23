@@ -10,13 +10,16 @@ var GameLayer = cc.LayerColor.extend({
         this.addChild( this.avatar );
 
         this.guage = new Guage();
-        this.guage.setPosition( cc.p( 50 , screenHeight - 100 ) );
+        this.guage.setPosition( cc.p( 25 , screenHeight - 75 ) );
         this.addChild( this.guage );
 
         this.clock;
+        this.speed = 3;
+        this.speedCount = 0;
         // for( var i = 0; i < 30; i++ ){
         //     this.clock[i] = new Clock();
         // }
+
         this.randomClock(Math.random()*5);
 
          this.setMouseEnabled( true );
@@ -39,8 +42,9 @@ var GameLayer = cc.LayerColor.extend({
                     this.removeChild( childOnScreen[i] );
                     // console.log(this.getChildrenCount());
                     if ( this.getChildrenCount() == 2 ){
+                        this.unschedule( this.callGuageDecrease );
                         this.schedule( function( ){ 
-                            this.guage.decreaseRate( 0.002 );
+                            this.callGuageDecrease();
                         } , 0.1 );
                         // this.guage.emptyAlarm(  );
                     }
@@ -50,30 +54,40 @@ var GameLayer = cc.LayerColor.extend({
         }
     },
 
+    callGuageDecrease: function() {
+         this.guage.decreaseRate( 0.001 );
+    },
+
     randomClock: function( t ) {
+        this.speedCount++;
+        if( this.speedCount % 13 == 0 && this.speed > 1){
+            this.speed -= 0.1;
+        }
         this.scheduleOnce( function( ){ 
             this.addClock();
-            this.randomClock( Math.random() * 3 );
+            this.randomClock( Math.random() * this.speed );
         } , t);
     },
 
     addClock: function() {
         this.clock = new Clock( this.guage );
-        this.clock.setPosition(cc.p( Math.random() * screenWidth, Math.random() * screenHeight ));
+        this.clock.setPosition(cc.p( 15 + ( Math.random() * screenWidth - 15 ), Math.random() * ( screenHeight - 100 ) ) );
+        console.log( this.guage.getRate() );
+        if( this.guage.getRate() <=0 ){
+            this.guage.increaseRate( 0.001 );
+        }
         this.addChild( this.clock );
-        // if( this.countClock >= 30 ){
-        //     this.countClock = 0;
-        // }
+        
     },
 
     clockAlarmed: function() {
         this.wakeRate++;
-        console.log(this.wakeRate);
+        // console.log(this.wakeRate);
     },
 
     clockStop: function() {
         this.wakeRate--;
-    }
+    },
 });
 
 var StartScene = cc.Scene.extend({
@@ -84,4 +98,6 @@ var StartScene = cc.Scene.extend({
         this.addChild( layer );
     }
 });
+
+
 

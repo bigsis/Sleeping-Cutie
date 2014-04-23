@@ -12,24 +12,29 @@ var Guage = cc.Node.extend({
 	},
 
 	increaseRate: function( rate ) {
-
+		
  		this.rate += rate;
  		this.reSchedule( this.rate );
 	},
 
 	decreaseRate: function( rate ) {
-		this.rate -= rate;
+		this.cleanup();
+		if ( this.rate > 0 ){
+			this.rate -= rate;
+			this.reSchedule( this.rate );
+		}
 	},
 
-	// emptyAlarm: function() {
-	// 	this.rate -= 0.2;
-	// 	this.reSchedule( this.rate );
-	// },
+	getRate: function() {
+		return this.rate;
+	},
 
 	reSchedule: function( rate ) {
 		this.schedule( function( ){ 
-			console.log(this.rate);
-		    this.inner.setScaleX( rate );
+			// console.log(this.rate);
+			if( this.rate < 1.5 ){
+		    	this.inner.setScaleX( rate );
+		    }
 		} , 0 );
 	}
 });
