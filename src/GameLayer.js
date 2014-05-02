@@ -16,6 +16,10 @@ var GameLayer = cc.LayerColor.extend({
         this.clock;
         this.speed = 3;
         this.speedCount = 0;
+
+        this.schedule( function( ){ 
+            this.callGuageDecrease();
+        } , 0.1 );
         // for( var i = 0; i < 30; i++ ){
         //     this.clock[i] = new Clock();
         // }
@@ -41,13 +45,11 @@ var GameLayer = cc.LayerColor.extend({
                     childOnScreen[i].dealarm();
                     this.removeChild( childOnScreen[i] );
                     // console.log(this.getChildrenCount());
-                    if ( this.getChildrenCount() == 2 ){
-                        this.unschedule( this.callGuageDecrease );
-                        this.schedule( function( ){ 
-                            this.callGuageDecrease();
-                        } , 0.1 );
-                        // this.guage.emptyAlarm(  );
-                    }
+                    // if ( this.getChildrenCount() == 2 ){
+                    //     this.unschedule( this.callGuageDecrease );
+                        
+                    //     // this.guage.emptyAlarm(  );
+                    // }
                     return;
                 }
             }
