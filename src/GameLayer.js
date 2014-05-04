@@ -13,10 +13,11 @@ var GameLayer = cc.LayerColor.extend({
         this.clock;
         this.speed = 3;
         this.speedCount = 0;
+        this.state = GameLayer.PLAY;
         this.startTime = this.date.getTime();
         this.randomClock(Math.random()*5);
         this.scheduleUpdate();
-         this.setMouseEnabled( true );
+        this.setMouseEnabled( true );
         return true;
     },
     
@@ -49,11 +50,11 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     updateScoreLabel: function() {
-        if( this.guage.getState() == 1 ){
+        
             var currentDate = new Date();
             var time = ( currentDate.getTime() - this.startTime ) / 1000;
             this.scoreLabel.setString( time.toFixed( 1 ) );
-        }
+        
     },
 
     onMouseDown: function( event ) {
@@ -91,7 +92,6 @@ var GameLayer = cc.LayerColor.extend({
     addClock: function() {
         this.clock = new Clock( this.guage );
         this.clock.setPosition(cc.p( 15 + ( Math.random() * screenWidth - 15 ), Math.random() * ( screenHeight - 100 ) ) );
-        console.log( this.guage.getRate() );
         if( this.guage.getRate() <=0 ){
             this.guage.increaseRate( 0.001 );
         }
@@ -109,7 +109,14 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     update: function() {
-        this.updateScoreLabel();
+        if( this.state == GameLayer.PLAY ){
+            if( this.guage.getState() == 1 ){
+                this.updateScoreLabel();
+            } else{
+                this.state = GameLayer.END;
+                this.avatar.wakeUp();
+            }
+        }
     },
 });
 
@@ -122,5 +129,6 @@ var StartScene = cc.Scene.extend({
     }
 });
 
-
+GameLayer.PLAY = 0;
+GameLayer.END = 1;
 
