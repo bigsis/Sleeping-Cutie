@@ -12,6 +12,22 @@ var g_resources = [
     {src: 'images/clock/idle_clock10.png' },
     {src: 'images/clock/idle_clock11.png' },
     {src: 'images/clock/idle_clock12.png' },
+    {src: 'images/clock/alarm_clock/alarm_clock01.png' },
+    {src: 'images/clock/alarm_clock/alarm_clock02.png' },
+    {src: 'images/clock/alarm_clock/alarm_clock03.png' },
+    {src: 'images/clock/alarm_clock/alarm_clock04.png' },
+    {src: 'images/clock/alarm_clock/alarm_clock05.png' },
+    {src: 'images/clock/alarm_clock/alarm_clock06.png' },
+    {src: 'images/clock/alarm_clock/alarm_clock07.png' },
+    {src: 'images/clock/dealarm_clock/alarm_clock01.png' },
+    {src: 'images/clock/dealarm_clock/alarm_clock02.png' },
+    {src: 'images/clock/dealarm_clock/alarm_clock03.png' },
+    {src: 'images/clock/dealarm_clock/alarm_clock04.png' },
+    {src: 'images/clock/dealarm_clock/alarm_clock05.png' },
+    {src: 'images/clock/dealarm_clock/alarm_clock06.png' },
+    {src: 'images/clock/dealarm_clock/alarm_clock07.png' },
+    {src: 'images/clock/dealarm_clock/alarm_clock08.png' },
+    {src: 'images/clock/dealarm_clock/alarm_clock09.png' },
     {src: 'images/kirby/sleep_kirby01.png' },
     {src: 'images/kirby/sleep_kirby02.png' },
     {src: 'images/kirby/sleep_kirby03.png' },
@@ -28,6 +44,8 @@ var g_resources = [
     {src: 'images/kirby/sleep_kirby14.png' },
     {src: 'images/nest.png' },
     {src: 'images/wake_guage.png' },
+    {src: 'images/wake_guage_frame.png' },
+    {src: 'images/background.jpg'},
 
  
     //plist
@@ -39,4 +57,5 @@ var g_resources = [
     //bgm
  
     //effect
+    {src: 'effects/Rooster.mp3'},
 ];
