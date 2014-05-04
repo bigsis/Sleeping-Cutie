@@ -9,17 +9,17 @@ var Clock =  cc.Sprite.extend({
 		this.runAction( this.movingAction );
 		
 		this.scheduleOnce( function( ){ 
-		    this.getParent().clockAlarmed();
+		    
 			
 
 			if( this.state == Clock.IDLE ){
-				this.stopAction(this.movingAction );
-				
+				this.getParent().clockAlarmed();
+				this.stopAction( this.movingAction );
 				this.movingAction = this.alarmAnimation();
 		   		this.runAction( this.movingAction );
 		   		this.state = Clock.ALARM;
 		   		this.scheduleOnce( function( ){ 
-		   			this.guage.increaseRate( 0.001 );
+		   			
 		   			// cc.AudioEngine.getInstance().playEffect( 'effects/Rooster.mp3', true );
 				} , 0 );
 		   		
@@ -39,6 +39,7 @@ var Clock =  cc.Sprite.extend({
 	dealarm: function() {
 		if( this.state == Clock.ALARM ){
 			this.guage.decreaseRate( 0.001 );
+			this.cleanup();
 		}
 		this.state = Clock.DEALARM;
 		this.stopAction( this.movingAction );
