@@ -19,6 +19,8 @@ var GameLayer = cc.LayerColor.extend({
         this.scheduleUpdate();
         this.setMouseEnabled( true );
         this.timenet = 0;
+        this.setTouchEnabled(true);
+        this.setTouchMode(1);
         return true;
     },
     
@@ -123,6 +125,15 @@ var GameLayer = cc.LayerColor.extend({
         this.addChild( this.scoreLabel2 ,5 );
         this.scoreLabel2.setString(this.timenet);
 
+    },
+
+    onTouchBegan:function( touch, event ) {
+        if( this.state == GameLayer.END ){
+            cc.AudioEngine.getInstance().stopMusic();
+            var director = cc.Director.getInstance();
+            director.replaceScene(cc.TransitionFade.create(1.5, new StartScene()));
+            cc.AudioEngine.getInstance().playMusic( 'effects/wakeupCut.mp3', true );
+        }
     },
 
     update: function() {
