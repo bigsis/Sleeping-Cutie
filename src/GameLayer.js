@@ -11,13 +11,14 @@ var GameLayer = cc.LayerColor.extend({
         this.createGuage();
         this.date = new Date();
         this.clock;
-        this.speed = 3;
+        this.speed = 2;
         this.speedCount = 0;
         this.state = GameLayer.PLAY;
         this.startTime = this.date.getTime();
         this.randomClock(Math.random()*5);
         this.scheduleUpdate();
         this.setMouseEnabled( true );
+        this.timenet = 0;
         return true;
     },
     
@@ -53,7 +54,8 @@ var GameLayer = cc.LayerColor.extend({
         
             var currentDate = new Date();
             var time = ( currentDate.getTime() - this.startTime ) / 1000;
-            this.scoreLabel.setString( time.toFixed( 1 ) );
+            this.timenet = time.toFixed(1);
+            this.scoreLabel.setString( this.timenet );
         
     },
 
@@ -80,7 +82,7 @@ var GameLayer = cc.LayerColor.extend({
 
     randomClock: function( t ) {
         this.speedCount++;
-        if( this.speedCount % 13 == 0 && this.speed > 1){
+        if( this.speedCount % 3 == 0 && this.speed > 0.1){
             this.speed -= 0.1;
         }
         this.scheduleOnce( function( ){ 
@@ -108,6 +110,21 @@ var GameLayer = cc.LayerColor.extend({
         this.wakeRate--;
     },
 
+    end: function() {
+         var ending = cc.Sprite.create( 'images/ending.png' );
+        ending.setPosition( cc.p( screenWidth / 2, screenHeight / 2 ) );
+        this.addChild( ending, 3 );
+        this.cleanup();
+        cc.AudioEngine.getInstance().playMusic( 'effects/Scream.mp3', true );
+
+        this.scoreLabel2 = cc.LabelTTF.create( this.score, 'Arial', 50 );
+        this.scoreLabel2.setPosition( cc.p( screenWidth - 75, screenHeight - 500 ) );
+        // this.scoreLabel2.color = ccc3(255, 255, 0); 
+        this.addChild( this.scoreLabel2 ,5 );
+        this.scoreLabel2.setString(this.timenet);
+
+    },
+
     update: function() {
         if( this.state == GameLayer.PLAY ){
             if( this.guage.getState() == 1 ){
@@ -115,6 +132,8 @@ var GameLayer = cc.LayerColor.extend({
             } else{
                 this.state = GameLayer.END;
                 this.avatar.wakeUp();
+                this.end();
+
             }
         }
     },

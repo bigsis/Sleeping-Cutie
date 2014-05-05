@@ -4,35 +4,29 @@ var Clock =  cc.Sprite.extend({
 		this.guage = guage;
 		this.initWithFile( "images/clock/idle_clock01.png");
 		this.state = Clock.IDLE;
-
+		this.effectPlay = false;
 		this.movingAction = this.idleAnimation();
 		this.runAction( this.movingAction );
+		this.scheduleUpdate();
 		
 		this.scheduleOnce( function( ){ 
-		    
-			
 
 			if( this.state == Clock.IDLE ){
 				this.getParent().clockAlarmed();
 				this.stopAction( this.movingAction );
 				this.movingAction = this.alarmAnimation();
 		   		this.runAction( this.movingAction );
-		   		this.state = Clock.ALARM;
-		   		this.scheduleOnce( function( ){ 
-		   			
-		   			// cc.AudioEngine.getInstance().playEffect( 'effects/Rooster.mp3', true );
-				} , 0 );
-		   		
+		   		this.effectPlay = true;
+		   		console.log("d")
 		   		this.schedule( function( ){ 
 		   			this.guage.increaseRate( 0.001 );
 		   			
+		   			
 				} , 0 );
+				this.state = Clock.ALARM;
 			}
-			
-
-			
+				
 		} , Math.random() * 3 );
-		
 		
 	},
 
@@ -48,6 +42,7 @@ var Clock =  cc.Sprite.extend({
 		this.runAction( this.movingAction );
 
 		cc.AudioEngine.getInstance().pauseAllEffects();
+
 		this.scheduleOnce( function( ){ 
 		   this.removeFromParent();
 			} , 1.5 );
@@ -102,7 +97,14 @@ var Clock =  cc.Sprite.extend({
 		animation.addSpriteFrameWithFile( "images/clock/dealarm_clock/dealarm_clock09.png" );
 		animation.setDelayPerUnit(0.17 );
 		return cc.RepeatForever.create( cc.Animate.create( animation ) );
-	}
+	},
+
+	update: function() {
+		if( this.effectPlay ){
+		   	cc.AudioEngine.getInstance().playEffect( 'effects/Rooster.mp3' );
+		   	this.effectPlay = false;
+		}
+	},
 });
 
 Clock.IDLE = 0;

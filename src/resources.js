@@ -47,10 +47,16 @@ var g_resources = [
     {src: 'images/kirby/wake_kirby06.png' },
     {src: 'images/kirby/wake_kirby07.png' },
     {src: 'images/kirby/wake_kirby08.png' },
+    {src: 'images/startscene/sleep1.png' },
+    {src: 'images/startscene/sleep2.png' },
+    {src: 'images/startscene/sleep3.png' },
+    {src: 'images/startscene/sleep4.png' },
+    {src: 'images/startscene/scene.png' },
     {src: 'images/nest.png' },
     {src: 'images/wake_guage.png' },
     {src: 'images/wake_guage_frame.png' },
     {src: 'images/background.jpg'},
+    {src: 'images/ending.png'},
 
  
     //plist
@@ -63,4 +69,6 @@ var g_resources = [
  
     //effect
     {src: 'effects/Rooster.mp3'},
+    {src: 'effects/Scream.mp3'},
+    {src: 'effects/wakeupCut.mp3'},
 ];
