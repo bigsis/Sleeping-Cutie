@@ -8,9 +8,11 @@ var Clock =  cc.Sprite.extend({
 		this.movingAction = this.idleAnimation();
 		this.runAction( this.movingAction );
 		this.scheduleUpdate();
-		
-		this.scheduleOnce( function( ){ 
+		this.setAlarm();
+	},
 
+	setAlarm: function() {
+		this.scheduleOnce( function( ){ 
 			if( this.state == Clock.IDLE ){
 				this.getParent().clockAlarmed();
 				this.stopAction( this.movingAction );
@@ -20,14 +22,10 @@ var Clock =  cc.Sprite.extend({
 		   		console.log("d")
 		   		this.schedule( function( ){ 
 		   			this.guage.increaseRate( 0.001 );
-		   			
-		   			
 				} , 0 );
 				this.state = Clock.ALARM;
-			}
-				
+			}	
 		} , Math.random() * 3 );
-		
 	},
 
 	dealarm: function() {
